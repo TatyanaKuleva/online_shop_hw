@@ -1,4 +1,4 @@
-[tool.poetry]
+django[tool.poetry]
 name = "online-shop-hw"
 version = "0.1.0"
 description = ""
