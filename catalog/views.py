@@ -6,7 +6,6 @@ def home(request):
     return render(request, 'home.html')
 
 def contacts(request):
-    # return render(request, 'contacts.html')
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
