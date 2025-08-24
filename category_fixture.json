@@ -1,0 +1,34 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "test_cat",
+        "description": "for testing"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Плагины для браузеров",
+        "description": "Улучшение пользовательского опыта, например, блокировка рекламы, управление закладками, проверка орфографии"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": " Плагины для веб-разработки и CMS",
+        "description": "асширение функций сайтов на WordPress, Joomla и других платформах."
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+        "name": "Плагины для графических редакторов и медиаплееров",
+        "description": "Добавление новых инструментов редактирования, эффектов, форматов файлов"
+    }
+}
+]
