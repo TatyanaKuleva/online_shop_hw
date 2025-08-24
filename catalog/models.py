@@ -31,6 +31,7 @@ class Product(models.Model):
     )
     description = models.TextField(
         blank=True,
+        null=True,
         verbose_name="Описание продукта",
         help_text="Опишите функционал продукта",
     )
