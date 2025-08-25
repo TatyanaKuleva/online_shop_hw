@@ -69,6 +69,23 @@
             </div>
         </div>
     </div>
+    <div class="container">
+         <h3>{{ title }} </h3>
+            {% if contacts %}
+                {% for contact in contacts %}
+                    <div class="contact-card">
+                        <h2>{{ contact.name }}</h2>
+                        {% if contact.email %}<p><strong>Email:</strong> <a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>{% endif %}
+                        {% if contact.phone %}<p><strong>Телефон:</strong> {{ contact.phone }}</p>{% endif %}
+                        {% if contact.address %}<p><strong>Адрес:</strong> {{ contact.address }}</p>{% endif %}
+                        {% if contact.website %}<p><strong>Веб-сайт:</strong> <a href="{{ contact.website }}" target="_blank">{{ contact.website }}</a></p>{% endif %}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="no-contacts">Пока нет контактных данных. Добавьте их через админку!</p>
+            {% endif %}
+     </div>
+
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">
