@@ -13,7 +13,9 @@ def home(request):
         print(f"   Создан: {product.created_at}")
         print(f"   Категория: {getattr(product.category, 'name', 'Не указана')}")
         print("-" * 30)
-    return render(request, "home.html")
+    list_product = Product.objects.all()
+    context = {'products': list_product}
+    return render(request, "home.html", context)
 
 
 def contacts(request):
@@ -24,5 +26,12 @@ def contacts(request):
         return HttpResponse(f"You have new message from {name}({phone}): {message}")
     contacts = Contact.objects.all()
     context = {"title": "Контакты", "contacts": contacts}
-    # return render(request, 'contacts_app/contact_list.html', context)
     return render(request, "contacts.html", context)
+
+
+def product_detail(request, pk):
+    product = Product.objects.get(pk=pk)
+    context = {'product': product}
+    return render(request, "product_detail.html", context)
+
+
