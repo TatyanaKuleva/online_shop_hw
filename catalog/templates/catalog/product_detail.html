@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
 
@@ -8,17 +8,17 @@
         <div class="col-12">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <h5 class="my-0 font-weight-normal product-name-area ">{{product.name}}</h5>
+                    <h5 class="my-0 font-weight-normal product-name-area ">{{object.name}}</h5>
                     <img src="{{ product.images.url }}" alt="{{ product.name }}" style="width: 250px; height: 120px;">
                 </div>
                 <div class="card-body">
                     <h1 class="card-title pricing-card-title"></h1>
                     <ul class="list-unstyled mt-3 mb-5 text-start m-3">
-                        <li class="mb-5"> Категория: {{product.category}}</li>
-                        <li class="mb-5"> Описание: {{product.description}}</li>
-                        <li class="mb-5"> Дата создания: {{product.created_at}}</li>
-                        <li class="mb-5"> Дата последнего изменения: {{product.updated_at}}</li>
-                        <li class="mb-5"> Ценa: {{product.price}} RUB</li>
+                        <li class="mb-5"> Категория: {{object.category}}</li>
+                        <li class="mb-5"> Описание: {{object.description}}</li>
+                        <li class="mb-5"> Дата создания: {{object.created_at}}</li>
+                        <li class="mb-5"> Дата последнего изменения: {{object.updated_at}}</li>
+                        <li class="mb-5"> Ценa: {{object.price}} RUB</li>
 
                     </ul>
                     <a class="btn btn-primary" href="{% url 'catalog:home' %}" role="button">Купить</a>
