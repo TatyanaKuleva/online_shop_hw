@@ -2,38 +2,52 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from catalog.models import Product, Category, Contact
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
-def home(request):
-    latest_products = Product.objects.all().order_by("-created_at")[:5]
-    print("Последние 5 созданных продуктов:")
-    print("=" * 50)
-    for i, product in enumerate(latest_products, 1):
-        print(f"{i}. {product.name}")
-        print(f"   Цена: {product.price} руб.")
-        print(f"   Создан: {product.created_at}")
-        print(f"   Категория: {getattr(product.category, 'name', 'Не указана')}")
-        print("-" * 30)
-    list_product = Product.objects.all()
-    context = {'products': list_product}
-    return render(request, "home.html", context)
+class ProductListView(ListView):
+    model = Product
 
 
-def contacts(request):
-    if request.method == "POST":
+class ProductDetailView(DetailView):
+    model = Product
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('name', 'description', 'images', 'category', 'price')
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('name', 'description', 'images', 'category', 'price')
+    success_url = reverse_lazy('catalog:home')
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy('catalog:home')
+
+
+class ContactPageView(TemplateView):
+    model = Contact
+    template_name = 'catalog/contacts.html'
+
+    def get(self, request, *args, **kwargs):
+
+        contacts = Contact.objects.all()
+        context = {"title": "Контакты", "contacts": contacts}
+        return render(request, "catalog/contacts.html", context)
+
+    def post(self, request, *args, **kwargs):
         name = request.POST.get("name")
         phone = request.POST.get("phone")
         message = request.POST.get("message")
-        return HttpResponse(f"You have new message from {name}({phone}): {message}")
-    contacts = Contact.objects.all()
-    context = {"title": "Контакты", "contacts": contacts}
-    return render(request, "contacts.html", context)
+        return HttpResponse(f"Вы получили новое сообщение от {name}({phone}): {message}")
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {'product': product}
-    return render(request, "product_detail.html", context)
 
 
 

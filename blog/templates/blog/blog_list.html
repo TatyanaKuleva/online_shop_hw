@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Записи блога</h1>
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                {% if post.preview_image %}
+                    <img src="{{ post.preview_image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 200px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/600x200?text=No+Image" class="card-img-top" alt="No Image" style="max-height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                    <p class="card-text"><small class="text-muted">Опубликовано: {{ post.created_at|date:"d M Y" }} | Просмотров: {{ post.views_count }}</small></p>
+                    <a href="{% url 'blog:detail' post.pk %}" class="btn btn-primary btn-sm">Подробнее</a>
+                    <a href="{% url 'blog:update' post.pk %}" class="btn btn-info btn-sm">Редактировать</a>
+                    <a href="{% url 'blog:delete' post.pk %}" class="btn btn-primary btn-sm">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="alert alert-info">Пока нет опубликованных записей в блоге.</p>
+            <a href="{% url 'blog:create'%}" class="btn btn-primary btn-sm">Создать запись</a>
+        </div>
+        {% endfor %}
+    </div>
+
+<!--    {# Если используется пагинация #}-->
+<!--    {% if is_paginated %}-->
+<!--    <nav aria-label="Page navigation">-->
+<!--        <ul class="pagination justify-content-center">-->
+<!--            {% if page_obj.has_previous %}-->
+<!--                <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a></li>-->
+<!--            {% endif %}-->
+<!--            <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>-->
+<!--            {% if page_obj.has_next %}-->
+<!--                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>-->
+<!--            {% endif %}-->
+<!--        </ul>-->
+<!--    </nav>-->
+<!--    {% endif %}-->
+
+</div>
+{% endblock %}
