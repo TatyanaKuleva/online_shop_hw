@@ -16,7 +16,8 @@ class StyleFormMixin():
 
 class ProductForm(StyleFormMixin, ModelForm):
     BANNED_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
-
+    MAX_UPLOAD_SIZE = 5 * 1024 * 1024
+    ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png']
 
     class Meta:
         model = Product
@@ -40,10 +41,22 @@ class ProductForm(StyleFormMixin, ModelForm):
                 raise forms.ValidationError(f"Описание содержит запрещенное слово: '{word}'.")
         return description
 
+
     def clean_price(self):
         price = self.cleaned_data['price']
         if price < 0:
             raise forms.ValidationError(f"цена не может быть отрицательной.")
         return price
 
+
+    def clean_images(self):
+        image = self.cleaned_data.get('images')
+        if image:
+            if image.size > self.MAX_UPLOAD_SIZE:
+                raise forms.ValidationError(f"Размер файла не должен превышать {self.MAX_UPLOAD_SIZE / (1024 * 1024):.0f} МБ.")
+
+            if image.content_type not in self.ALLOWED_IMAGE_TYPES:
+                raise forms.ValidationError("Поддерживаются только файлы форматов JPEG и PNG.")
+
+        return image
 
