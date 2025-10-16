@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 from django.conf.global_settings import STATICFILES_DIRS, MEDIA_URL, MEDIA_ROOT, AUTH_USER_MODEL, LOGIN_REDIRECT_URL, \
-    LOGOUT_REDIRECT_URL
+    LOGOUT_REDIRECT_URL, SERVER_EMAIL
 
 load_dotenv(override=True)
 
@@ -110,4 +110,18 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = '/home/'
+
+
+LOGIN_URL = 'users:login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'tatiyana.kuleva3@yandex.ru'
+EMAIL_HOST_PASSWORD = 'qlcfaarrgsbvcrff'
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
