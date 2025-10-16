@@ -14,3 +14,9 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Пользователь с таким email уже существует.")
         return email
+
+class UserProfileEditForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['email']
