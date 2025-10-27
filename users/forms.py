@@ -1,13 +1,16 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from catalog.forms import StyleFormMixin
-from users.models import User
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password1', 'password2')
+        fields = ('email', 'password1', 'password2', 'phone', 'avatar', 'country')
 
     def clean_email(self):
         email = self.cleaned_data['email']
@@ -19,4 +22,4 @@ class UserProfileEditForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['email']
+        fields = ['email', 'phone', 'avatar', 'country']
