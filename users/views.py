@@ -5,9 +5,11 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView, UpdateView
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
-from users.models import User
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 from .forms import UserRegisterForm, UserProfileEditForm
