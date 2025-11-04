@@ -23,6 +23,7 @@ class ProductForm(StyleFormMixin, ModelForm):
         model = Product
         fields = ('name', 'description', 'images', 'category', 'price')
 
+
     def clean_name(self):
         name = self.cleaned_data['name']
         name_lower = name.lower()

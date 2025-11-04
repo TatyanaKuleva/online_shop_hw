@@ -19,10 +19,35 @@
                         <li class="mb-5"> Дата создания: {{object.created_at}}</li>
                         <li class="mb-5"> Дата последнего изменения: {{object.updated_at}}</li>
                         <li class="mb-5"> Ценa: {{object.price}} RUB</li>
-
+                        <li class="mb-5"> Владелец: {{object.owner}}</li>
+                        {% if product.is_published %}
+                         <li class="mb-5"> Статус:опубликован</li>
+                            {% if show_unpublish_button %}
+                                <form action="{% url 'catalog:unpublish_product' object.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Отменить публикацию</button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                         <li class="mb-5"> Статус:не опубликован</li>
+                            {% if show_publish_button %}
+                                 <form action="{% url 'catalog:publish_product' object.pk %}" method="post" style="display:inline;">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-warning">Опубликовать</button>
+                                 </form>
+                            {% endif %}
+                        {% endif %}
                     </ul>
                     <a class="btn btn-primary" href="{% url 'catalog:home' %}" role="button">Купить</a>
                     <a class="btn btn-primary" href="{% url 'catalog:home' %}" role="button">Назад</a>
+                    <p>
+                        {% if can_delete_product %}
+                            <form action="{% url 'catalog:product_delete' object.pk %}" method="post" style="display:inline; margin-left: 10px;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Удалить продукт</button>
+                            </form>
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
