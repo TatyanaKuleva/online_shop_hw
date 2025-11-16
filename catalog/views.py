@@ -34,25 +34,15 @@ class ProductListByCategoryView(ListView):
     template_name = 'catalog/product_list_by_category.html'
     context_object_name = 'products_by_category'
 
-    def get_queryset(self):
-        category_id = self.kwargs['category_id']
-        category = get_object_or_404(Category, pk=category_id)
-        queryset = Product.objects.filter(category_id=category_id)
-        return queryset
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     category_id = self.kwargs['category_id']
-    #     context['category'] = get_object_or_404(Category, pk=category_id)
-    #     return context
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category_id = self.kwargs['category_id']
-        category, _products = get_products_by_category(category_id)
+        category = get_object_or_404(Category, pk=category_id)
+        products = get_products_by_category(category_id)
         context['category'] = category
         context['categories'] = Category.objects.all()
-        context['products'] = _products
+        context['products'] = products
         return context
 
 

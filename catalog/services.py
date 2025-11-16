@@ -1,9 +1,8 @@
 from  catalog.models import Product, Category
-from django.shortcuts import get_object_or_404
-from django.db.models import QuerySet
 
-def get_products_by_category(id:int) -> tuple[Category, QuerySet[Product]]:
-    category = get_object_or_404(Category, pk=id)
-    products = category.products.filter()
 
-    return category, products
+def get_products_by_category(category_id):
+    category = Category.objects.filter(pk=category_id).first()
+    products = Product.objects.filter(category=category)
+    return products
+
